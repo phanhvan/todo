@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+// import { data } from "../firebase";
+// ≡ Live Push data to firebase
 import { connect } from "react-redux";
 
 class TodoForm extends Component {
@@ -6,7 +8,6 @@ class TodoForm extends Component {
         cardTitle: "",
         cardContent: "",
     };
-
     handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -14,15 +15,19 @@ class TodoForm extends Component {
             [name]: value,
         });
     };
-
     handleSubmit = (title, content) => {
         var item = {};
         item.cardTitle = title;
         item.cardContent = content;
-        // console.log(item);
-        this.props.addDataToStore(); // Use Reducer in Store and Dispatch ADD_DATA to Store
-    }
 
+        this.props.addDataTodofromStore(item);
+        // ≡ Use Reducer in Store and Dispatch ADD_DATA_TODOFROM_STORE to Store
+        // console.log("item" + JSON.stringify(item));
+        // ≡≡ Use Redux Push data from Store to firebase
+
+        // data.push(item);
+        // ≡ Live Push data to firebase
+    };
     render() {
         const cardTitle = this.state.cardTitle;
         const cardContent = this.state.cardContent;
@@ -53,10 +58,16 @@ class TodoForm extends Component {
                                     onChange={this.handleChange}
                                 />
                             </div>
-                            <button onClick={() => this.handleSubmit(cardTitle, cardContent)} className="btn btn-primary" type="reset">
+                            <button
+                                onClick={() =>
+                                    this.handleSubmit(cardTitle, cardContent)
+                                }
+                                className="btn btn-primary"
+                                type="reset"
+                            >
                                 Add Card
                             </button>
-                            {/* Use type "reset" clear value when submit, Arrow function to get the final value when inputted */}
+                            {/* ≡ Use type "reset" clear value when submit, Arrow function to get the final value when inputted */}
                         </form>
                     </div>
                 </div>
@@ -65,19 +76,26 @@ class TodoForm extends Component {
     }
 }
 
+// {/*
 const mapStateToProps = (state) => {
     return {
-        dataState: state.testConnect,
+        dataState: state,
     };
 };
-
 const mapDispatchToProps = (dispatch) => {
     return {
-        addDataToStore: (add_dataToStore) => {
-            dispatch({ type: "ADD_DATA" });
+        addDataTodofromStore: (add_data_todofrom_store) => {
+            dispatch({
+                type: "ADD_DATA_TODOFROM_STORE",
+                add_data_todofrom_store,
+            });
         },
-        // Use parameter "add_dataToStore" from Store
+        // ≡ Use parameter "add_data_todofrom_store" from Store
     };
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);
+// ≡≡ Use Reducer in Store and Dispatch ADD_DATA_TODOFROM_STORE to Store
+// */}
+
+// export default TodoForm;
+// ≡ Live Push data to firebase
