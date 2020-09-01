@@ -1,0 +1,32 @@
+body {
+    height: 100vh;
+    font-family: 'SF Pro Display' !important;
+    background-image: url("../img/813-1920x1080.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.App-header {
+    min-height: 100vh;
+}
+.card-customize {
+    border: none;
+    background-color: #ebecf0;
+}
+.card-customize .card-header {
+    border-color: transparent;
+}
+.card-customize .card-header .h6 a:hover {
+    text-decoration: none;
+}
+.scrollbar {
+    overflow: scroll;
+    max-height: calc(100vh - 80px);
+}
+.scrollbar::-webkit-scrollbar { 
+    display: none; 
+}
+.form-group-customize textarea {
+    min-height: 150px;
+    font-size: 13px;
+}
