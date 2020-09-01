@@ -3,14 +3,21 @@ import { connect } from "react-redux";
 import Navbar from "./components/Navbar";
 import TodoList from "./components/TodoList";
 import TodoForm from "./components/TodoForm";
-import {data} from './firebase';
+// import News from "./components/News";
+import { data } from "./firebase";
 
 class App extends Component {
-    render() {
-        // data.once('value').then(function(snapshot) {
-        //     console.log(snapshot.val());
-        // })
+    addDataToFirebase = (item) => {
+        data.push(item)
+    };
 
+    render() {
+        {/* 
+            data.once('value').then(function(snapshot) {
+                console.log(snapshot.val());
+            })
+            // Check data from firebase
+        */}
         return (
             <div className="App-header">
                 {/* App: {this.props.data} */}
@@ -22,9 +29,12 @@ class App extends Component {
                                 <TodoList />
                             </div>
                         </div>
-                        <TodoForm />
+                        <TodoForm
+                            getData={(item) => this.addDataToFirebase(item)}
+                        />
                     </div>
                 </div>
+                {/* <News /> */}
             </div>
         );
     }
