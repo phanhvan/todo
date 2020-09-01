@@ -56,6 +56,7 @@ class TodoForm extends Component {
                             <button onClick={() => this.handleSubmit(cardTitle, cardContent)} className="btn btn-primary" type="reset">
                                 Add Card
                             </button>
+                            {/* Use type "reset" clear value when submit, Arrow function to get the final value when inputted */}
                         </form>
                     </div>
                 </div>
@@ -75,7 +76,7 @@ const mapDispatchToProps = (dispatch) => {
         addDataToStore: (add_dataToStore) => {
             dispatch({ type: "ADD_DATA" });
         },
-        // Use parameter "add_dataToStore" from Store 
+        // Use parameter "add_dataToStore" from Store
     };
 };
 
