@@ -19,7 +19,7 @@ class TodoItem extends Component {
                                 <a
                                     data-toggle="collapse"
                                     data-parent="#accordianId"
-                                    href="#section1ContentId"
+                                    href={"#collapseItem" + this.props.index}
                                     aria-expanded="true"
                                     aria-controls="section1ContentId"
                                 >
@@ -28,7 +28,7 @@ class TodoItem extends Component {
                             </h6>
                         </div>
                         <div
-                            id="section1ContentId"
+                            id={"collapseItem" + this.props.index}
                             className="collapse in"
                             role="tabpanel"
                             aria-labelledby="section1HeaderId"

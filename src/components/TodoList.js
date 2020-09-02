@@ -7,7 +7,7 @@ class TodoList extends Component {
         dataCurrent: [],
         // ≡ Set "dataCurrent" are empty Array
     };
-    componentWillMount() {
+    componentDidMount() {
         data.on("value", (items) => {
             var arrayDataFromFirebase = [];
             items.forEach((item) => {
@@ -20,8 +20,8 @@ class TodoList extends Component {
                     titleReceived: titleFromFirebase,
                     contentReceived: contentFromFirebase,
                 });
-            // ≡ Push DataFromFirebase to "arrayDataFromFirebase empty"
-          });
+                // ≡ Push DataFromFirebase to "arrayDataFromFirebase empty"
+            });
             // ≡ Because DataFromFirebase are Object, so use forEach
             this.setState({
                 dataCurrent: arrayDataFromFirebase,
@@ -29,12 +29,13 @@ class TodoList extends Component {
         });
         // ≡ Get DataFromFirebase by "on" function
     }
-    getDataFromState = () => {
+    displayDataFromState = () => {
         const data = this.state.dataCurrent;
         if (data !== null) {
             return data.map((item, i) => (
                 <TodoItem
                     key={i}
+                    index={i}
                     title={item.titleReceived}
                     content={item.contentReceived}
                 />
@@ -42,7 +43,7 @@ class TodoList extends Component {
         }
     };
     render() {
-        return <div className="row">{this.getDataFromState()}</div>;
+        return <div className="row">{this.displayDataFromState()}</div>;
     }
 }
 
