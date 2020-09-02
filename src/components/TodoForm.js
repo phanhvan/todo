@@ -36,7 +36,7 @@ class TodoForm extends Component {
                     <div className="col-3"></div>
                     <div className="col-8">
                         <form>
-                            <h5 className="h5">Create Todo</h5>
+                            <h5 className="h5">Features Todo</h5>
                             <div className="form-group">
                                 <input
                                     type="text"

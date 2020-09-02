@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class TodoItem extends Component {
     render() {
@@ -15,7 +16,7 @@ class TodoItem extends Component {
                             role="tab"
                             id="section1HeaderId"
                         >
-                            <h6 className="mb-0 h6">
+                            <h6 className="mb-0 h6 d-flex justify-content-between align-items-center">
                                 <a
                                     data-toggle="collapse"
                                     data-parent="#accordianId"
@@ -25,6 +26,19 @@ class TodoItem extends Component {
                                 >
                                     {this.props.title}
                                 </a>
+                                <div className="btn-group-sm">
+                                    <button
+                                        onClick={() =>
+                                            this.props.handleFormStatus()
+                                        }       
+                                        className="btn"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button className="btn">
+                                        <i className="fas fa-times"></i>
+                                    </button>
+                                </div>
                             </h6>
                         </div>
                         <div
@@ -33,6 +47,7 @@ class TodoItem extends Component {
                             role="tabpanel"
                             aria-labelledby="section1HeaderId"
                         >
+                            {/* ≡ Fixed collapse for id item */}
                             <div className="card-body small">
                                 {this.props.content}
                             </div>
@@ -44,4 +59,18 @@ class TodoItem extends Component {
     }
 }
 
-export default TodoItem;
+const mapStateToProps = (state) => {
+    return {
+        formStatus: state.dataState.formStatus,
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleFormStatus: () => {
+            dispatch({
+                type: "FORM_STATUS",
+            });
+        },
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(TodoItem);
