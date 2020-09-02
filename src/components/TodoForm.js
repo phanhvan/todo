@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 // import { data } from "../firebase";
-// ≡ Live Push data to firebase
 import { connect } from "react-redux";
 
 class TodoForm extends Component {

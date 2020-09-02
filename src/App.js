@@ -12,9 +12,7 @@ class App extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9 scrollbar">
-                            <div className="row">
                                 <TodoList />
-                            </div>
                         </div>
                         <TodoForm />
                     </div>

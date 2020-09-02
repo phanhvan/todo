@@ -1,29 +1,48 @@
-import React, { Component } from 'react';
-// import { data } from "../firebase";
+import React, { Component } from "react";
+import { data } from "../firebase";
+import TodoItem from "./TodoItem";
 
 class TodoList extends Component {
+    state = {
+        dataCurrent: [],
+        // ≡ Set "dataCurrent" are empty Array
+    };
+    componentWillMount() {
+        data.on("value", (items) => {
+            var arrayDataFromFirebase = [];
+            items.forEach((item) => {
+                var idFromFirebase = item.key;
+                var titleFromFirebase = item.val().cardTitle;
+                var contentFromFirebase = item.val().cardContent;
+
+                arrayDataFromFirebase.push({
+                    idReceived: idFromFirebase,
+                    titleReceived: titleFromFirebase,
+                    contentReceived: contentFromFirebase,
+                });
+            // ≡ Push DataFromFirebase to "arrayDataFromFirebase empty"
+          });
+            // ≡ Because DataFromFirebase are Object, so use forEach
+            this.setState({
+                dataCurrent: arrayDataFromFirebase,
+            });
+        });
+        // ≡ Get DataFromFirebase by "on" function
+    }
+    getDataFromState = () => {
+        const data = this.state.dataCurrent;
+        if (data !== null) {
+            return data.map((item, i) => (
+                <TodoItem
+                    key={i}
+                    title={item.titleReceived}
+                    content={item.contentReceived}
+                />
+            ));
+        }
+    };
     render() {
-        
-        return (
-            <div className="col-3 mt-4">
-              <div id="accordianId" role="tablist" aria-multiselectable="true">
-              <div className="card card-customize">
-                <div className="card-header" role="tab" id="section1HeaderId">
-                  <h6 className="mb-0 h6">
-                    <a data-toggle="collapse" data-parent="#accordianId" href="#section1ContentId" aria-expanded="true" aria-controls="section1ContentId">
-                      Section 1
-                    </a>
-                  </h6>
-                </div>
-                <div id="section1ContentId" className="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
-                  <div className="card-body small">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque nihil qui dolore perferendis ut debitis. Fugit, nostrum dolorum itaque officiis et facilis aspernatur officia, deserunt, dolores excepturi odit totam dolore?
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+        return <div className="row">{this.getDataFromState()}</div>;
     }
 }
 
