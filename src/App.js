@@ -2,21 +2,23 @@ import React, { Component } from "react";
 import Navbar from "./components/Navbar";
 import TodoList from "./components/TodoList";
 import TodoForm from "./components/TodoForm";
-// import { data } from "./firebase";
 import { connect } from "react-redux";
+import AlertInfo from './components/AlertInfo'
+// import { data } from "./firebase";
 
 class App extends Component {
     render() {
-        // const formStatus = this.props.formStatus;
+        const { status } = this.props;
         return (
             <div className="App-header">
                 <Navbar />
+                <AlertInfo />
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9 scrollbar">
                             <TodoList />
                         </div>
-                        <TodoForm />
+                        {status && <TodoForm />}
                     </div>
                 </div>
             </div>
@@ -25,13 +27,12 @@ class App extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        formStatus: state.dataState.formStatus,
+        status: state.dataStore.formStatus,
     };
-
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleFormStatus: () => {
+        formStatus: () => {
             dispatch({
                 type: "FORM_STATUS",
             });

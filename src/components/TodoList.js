@@ -4,47 +4,47 @@ import TodoItem from "./TodoItem";
 
 class TodoList extends Component {
     state = {
-        dataCurrent: [],
-        // ≡ Set "dataCurrent" are empty Array
+        item: [],
+        // ≡ Set "item" are empty Array
     };
     componentDidMount() {
         data.on("value", (items) => {
-            var arrayDataFromFirebase = [];
+            var takeArrayItemFromFirebase = [];
             items.forEach((item) => {
                 var idFromFirebase = item.key;
-                var titleFromFirebase = item.val().cardTitle;
-                var contentFromFirebase = item.val().cardContent;
+                var titleFromFirebase = item.val().title;
+                var contentFromFirebase = item.val().content;
 
-                arrayDataFromFirebase.push({
-                    idReceived: idFromFirebase,
-                    titleReceived: titleFromFirebase,
-                    contentReceived: contentFromFirebase,
+                takeArrayItemFromFirebase.push({
+                    id: idFromFirebase,
+                    title: titleFromFirebase,
+                    content: contentFromFirebase,
                 });
-                // ≡ Push DataFromFirebase to "arrayDataFromFirebase empty"
             });
-            // ≡ Because DataFromFirebase are Object, so use forEach
+            // ≡ Because takeArrayItemFromFirebase are object, so use forEach
             this.setState({
-                dataCurrent: arrayDataFromFirebase,
+                item: takeArrayItemFromFirebase,
+                // ≡ Push takeArrayItemFromFirebase to state.item
             });
         });
-        // ≡ Get DataFromFirebase by "on" function
+        // ≡ Take ArrayItemFromFirebase by "on" function
     }
-    displayDataFromState = () => {
-        const data = this.state.dataCurrent;
-        if (data !== null) {
-            return data.map((item, i) => (
+    displayItem = () => {
+        const item = this.state.item;
+        if (item) {
+            return item.map((value, i) => (
                 <TodoItem
                     key={i}
-                    index={i}
-                    title={item.titleReceived}
-                    content={item.contentReceived}
+                    id={i}
+                    item={value}
+                    title={value.title}
+                    content={value.content}
                 />
             ));
         }
     };
     render() {
-        return <div className="row">{this.displayDataFromState()}</div>;
+        return <div className="row">{this.displayItem()}</div>;
     }
 }
-
 export default TodoList;

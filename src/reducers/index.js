@@ -2,23 +2,54 @@ import { combineReducers } from "redux";
 import * as actionTypes from "../actions/types";
 import { data } from "../firebase";
 
-const dataState = {
+const dataStore = {
+    itemStore: {},
     formStatus: false,
+    isAdd: false,
+    alertStatus: false,
+    alertContent: "",
 };
-
-const reducerData = (state = dataState, action) => {
+const reducerData = (state = dataStore, action) => {
     switch (action.type) {
-        case actionTypes.ADD_DATA_TODOFROM_STORE:
-            data.push(action.add_data_todofrom_store);
-            // ≡ Push data Store to firebase
-
-            // console.log( "add_data_todofrom_store Push firebase" + JSON.stringify(action.add_data_todofrom_store));
-            // ≡ Add parameter "add_data_todofrom_store"
+        case actionTypes.SEND_ITEM_TO_STORE:
+            data.push(action.send_item_to_store);
+            // ≡ Push item from store to firebase
+            // ≡≡ Add parameter "send_item_to_store"
             return state;
 
         case actionTypes.FORM_STATUS:
-            console.log(dataState, 'dataState in Store');
             return { ...state, formStatus: !state.formStatus };
+
+        case actionTypes.PUSH_ITEM_RECEIVED_TO_STORE:
+            return { ...state, itemStore: action.push_item_received_to_store };
+
+        case actionTypes.UPDATE_ITEM_FROM_STORE_TO_FIREBASE:
+            data.child(action.updateItem.id).update({
+                title: action.updateItem.title,
+                content: action.updateItem.content,
+            });
+            return { ...state, itemStore: {} };
+
+        case actionTypes.DELETE_ITEM:
+            data.child(action.delete_item).remove();
+            return state;
+
+        case actionTypes.HANDLE_IS_ADD:
+            return { ...state, isAdd: !state.isAdd };
+
+        case actionTypes.ALERT_STATUS_HANDLER_ON:
+            return {
+                ...state,
+                alertStatus: true,
+                alertContent: action.alertContent,
+            };
+
+        case actionTypes.ALERT_STATUS_HANDLER_OFF:
+            return {
+                ...state,
+                alertStatus: false,
+                alertContent: action.alertContent,
+            };
 
         default:
             return state;
@@ -26,7 +57,7 @@ const reducerData = (state = dataState, action) => {
 };
 
 const allReducers = combineReducers({
-    dataState: reducerData,
+    dataStore: reducerData,
 });
 
 export default allReducers;

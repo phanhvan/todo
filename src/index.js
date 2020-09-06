@@ -9,7 +9,7 @@ import allReducers from "./reducers";
 
 const store = createStore(allReducers);
 store.subscribe(() => {
-    console.log('subscribe', JSON.stringify(store.getState()));
+    // console.log('subscribe', JSON.stringify(store.getState()));
 });
 
 ReactDOM.render(
